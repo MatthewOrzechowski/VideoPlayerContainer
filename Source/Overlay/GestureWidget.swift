@@ -100,11 +100,11 @@ public class GestureService : Service {
     
     /// Tap Gesture.
     /// Gesture applying over the whole VideoPlayerContainer should be assigned to this to make sure you can receive events.
-    @ViewState public var simultaneousTapGesture: _EndedGesture<SpatialTapGesture>?
+    @ViewState public var simultaneousTapGesture: _EndedGesture<TapGesture>?
 
     /// DoubleTap Gesture.
     /// Gesture applying over the whole VideoPlayerContainer should be assigned to this to make sure you can receive events.
-    @ViewState public var simultaneousDoubleTapGesture: _EndedGesture<SpatialTapGesture>?
+    @ViewState public var simultaneousDoubleTapGesture: _EndedGesture<TapGesture>?
     
     /// LongPress Gesture.
     /// Gesture applying over the whole VideoPlayerContainer should be assigned to this to make sure you can receive events.
@@ -123,7 +123,7 @@ public class GestureService : Service {
     /// Tap Gesture.
     /// Widgets inside the VideoPlayerContainer can use it as the simulataneous gesture to pass through the gesture to the built-in Tap gesture.
     public private(set) lazy var tapGesture: some SwiftUI.Gesture = {
-        SpatialTapGesture(count: 1)
+        TapGesture(count: 1)
             .onEnded { [weak self] value in
                 guard let self else { return }
                 let leftSide = value.location.x < self.context.viewSize.width * 0.5
@@ -135,7 +135,7 @@ public class GestureService : Service {
     /// Double-Tap Gesture.
     /// Widgets inside the VideoPlayerContainer can use it as the simulataneous gesture to pass through the gesture to the built-in Double-Tap gesture.
     public private(set) lazy var doubleTapGesture: some SwiftUI.Gesture = {
-        SpatialTapGesture(count: 2)
+        TapGesture(count: 2)
             .onEnded { [weak self] value in
                 guard let self else { return }
                 let leftSide = value.location.x < self.context.viewSize.width * 0.5
@@ -252,13 +252,13 @@ struct GestureWidget: View {
                     .gesture(
                         SimultaneousGesture(
                             service.doubleTapGesture,
-                            service.simultaneousDoubleTapGesture ?? SpatialTapGesture(count:2).onEnded { _ in }
+                            service.simultaneousDoubleTapGesture ?? TapGesture(count:2).onEnded { _ in }
                         )
                     )
                     .gesture(
                         SimultaneousGesture(
                             service.tapGesture,
-                            service.simultaneousTapGesture ?? SpatialTapGesture(count:1).onEnded { _ in }
+                            service.simultaneousTapGesture ?? TapGesture(count:1).onEnded { _ in }
                         )
                     )
                     .gesture(
