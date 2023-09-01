@@ -122,7 +122,7 @@ public class GestureService : Service {
     
     /// Tap Gesture.
     /// Widgets inside the VideoPlayerContainer can use it as the simulataneous gesture to pass through the gesture to the built-in Tap gesture.
-    public private(set) lazy var tapGesture: some Gesture = {
+    public private(set) lazy var tapGesture: some SwiftUI.Gesture = {
         DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onEnded { value in
                 let leftSide = value.location.x < self.context.viewSize.width * 0.5
@@ -131,7 +131,7 @@ public class GestureService : Service {
             }
     }()
     
-    public private(set) lazy var doubleTapGesture: some Gesture = {
+    public private(set) lazy var doubleTapGesture: some SwiftUI.Gesture = {
         DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onEnded { value in
                 // Detecting double tap can be tricky with DragGesture; this is a placeholder
