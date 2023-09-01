@@ -178,9 +178,9 @@ public struct PlayerWidget: View {
                                 AnyView(overlay())
                             }
                             
-                            if service.overlays.contains(.toast) {
-                                ToastWidget()
-                            }
+                            // if service.overlays.contains(.toast) {
+                            //     ToastWidget()
+                            // }
                             
                             if let overlay = service.overlayAfterToast {
                                 AnyView(overlay())
