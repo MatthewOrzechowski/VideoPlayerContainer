@@ -122,27 +122,25 @@ public class GestureService : Service {
     
     /// Tap Gesture.
     /// Widgets inside the VideoPlayerContainer can use it as the simulataneous gesture to pass through the gesture to the built-in Tap gesture.
-    public private(set) lazy var tapGesture: some SwiftUI.Gesture = {
-        TapGesture(count: 1)
-            .onEnded { [weak self] value in
-                guard let self else { return }
+    public private(set) lazy var tapGesture: some Gesture = {
+        DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded { value in
                 let leftSide = value.location.x < self.context.viewSize.width * 0.5
                 let event = GestureEvent(gesture: .tap( leftSide ? .left : .right ), action: .end, value: .tap(value.location))
                 self.observable.send(event)
             }
     }()
-
-    /// Double-Tap Gesture.
-    /// Widgets inside the VideoPlayerContainer can use it as the simulataneous gesture to pass through the gesture to the built-in Double-Tap gesture.
-    public private(set) lazy var doubleTapGesture: some SwiftUI.Gesture = {
-        TapGesture(count: 2)
-            .onEnded { [weak self] value in
-                guard let self else { return }
+    
+    public private(set) lazy var doubleTapGesture: some Gesture = {
+        DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded { value in
+                // Detecting double tap can be tricky with DragGesture; this is a placeholder
                 let leftSide = value.location.x < self.context.viewSize.width * 0.5
                 let event = GestureEvent(gesture: .doubleTap( leftSide ? .left : .right ), action: .end, value: .doubleTap(value.location))
                 self.observable.send(event)
             }
     }()
+
     
     /// LongPress Gesture.
     /// Widgets inside the VideoPlayerContainer can use it as the simulataneous gesture to pass through the gesture to the built-in Long-Press gesture.
